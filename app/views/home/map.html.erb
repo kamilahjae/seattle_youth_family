@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet"  href="../Flask/static/js/leaflet/leaflet.css"></link>
+</head>
+<body>
+
+<div id="map"></div>
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../Flask/static/js/leaflet/leaflet.js"></script>
+<script type="text/javascript">
+    var map = L.map('map').setView([47.6, -122.3], 13);
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/examples.map-qfyrx5r8/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(map);
+    loadThemes();
+    function loadThemes(){
+        loadCDBoundary();
+        loadBusinesses();
+        loadHistoricalLandmarks();
+        loadCommunityOrganizations();
+    }
+    function loadCDBoundary(){
+        //Load boundary json file
+        $.getJSON("data/cd_boundary.json", function(data) {
+            L.geoJson(data).addTo(map);
+        });
+    }
+    function loadHistoricalLandmarks(){
+        //Load the Historical Landmarks JSON file and add entries to the map.
+        var historicalLayer =  L.layerGroup();
+        $.getJSON("data/historical_landmarks.json", function(data){
+            //got the data. Loop and add to a marker group.
+            $.each(data.results, function(idx, result){
+                historicalLayer.addLayer(L.marker([result.geometry.location.lat, result.geometry.location.lng]));
+            });
+        });
+        historicalLayer.addTo(map);
+        return historicalLayer;
+    }
+    function loadBusinesses(){
+        //Load the Historical Landmarks JSON file and add entries to the map.
+        var businessLayer =  L.layerGroup();
+        $.getJSON("data/businesses.json", function(data){
+            //got the data. Loop and add to a marker group.
+            $.each(data.results, function(idx, result){
+                businessLayer.addLayer(L.marker([result.geometry.location.lat, result.geometry.location.lng]));
+            });
+        });
+        businessLayer.addTo(map);
+        return businessLayer;
+    }
+    function loadCommunityOrganizations(){
+        //Load the Historical Landmarks JSON file and add entries to the map.
+        var coLayer =  L.layerGroup();
+        $.getJSON("data/community_institutions.json", function(data){
+            //got the data. Loop and add to a marker group.
+            $.each(data.results, function(idx, result){
+                coLayer.addLayer(L.marker([result.geometry.location.lat, result.geometry.location.lng]));
+            });
+        });
+        coLayer.addTo(map);
+        return coLayer;
+    }
+</script>
+</body>
+</html>
