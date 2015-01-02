@@ -13,3 +13,20 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(document).ready( function() {
+  $('.dropdown-toggle').dropdown();
+});
+
+$(function() {
+  $(".choose").click(function(event){ //we only want the button that is clicked. not all buttons
+    event.preventDefault();
+    var form = $(this).parents("form"); //this is similar to self. rep the obj that is currently being acted upon
+    //grab the attribute that is linked to the route of the button
+    var url  = form.attr("action");
+    $.ajax({
+      type: "POST",
+      url: url
+    });
+  });
+});

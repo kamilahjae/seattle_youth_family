@@ -1,2 +1,83 @@
-<h1>Issues</h1>
-<p><%= @issues %>
+<h1 class="centered-content">Youth Family Initiatives App</h1>
+
+<p class="centered-content">What concerns do Seattle families have for their
+  youth? Filter by organization, date, and category to find out.
+</p>
+
+<div class="row centered-content">
+  <div class="col-md-4">
+    <div class="dropdown"> <!-- for organizations -->
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        Select an Organization
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Select All</a></li>
+        <% @organizations.each do |organization| %>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= organization %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="dropdown"> <!-- for dates -->
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        Choose a Date
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Select All</a></li>
+        <% @dates.each do |date| %>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= date %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="dropdown"> <!-- for categories -->
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        Select a Category
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Select All</a></li>
+        <% @categories.each do |category| %>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= category %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div><!-- end of row>
+
+
+  <!-- display issues under dropdown menus -->
+  <div class="issues pagination">
+  <% @issues.each do |issue| %>
+    <ul>
+      <p>"<%= issue %>"</p>
+    </ul><br>
+  <% end %>
+  </div>
+
+  <%= will_paginate @issues, renderer: BootstrapPagination::Rails %>
+  <nav>
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
