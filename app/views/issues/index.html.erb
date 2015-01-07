@@ -28,7 +28,7 @@
       </button>
       <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Select All</a></li>
-        <% @dates.each do |date| %>
+        <% @show_dates.each do |date| %>
         <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= date %></a></li>
         <% end %>
       </ul>
@@ -53,15 +53,26 @@
 
 
   <!-- display issues under dropdown menus -->
-  <div class="issues pagination">
-  <% @issues.each do |issue| %>
-    <ul>
-      <p>"<%= issue %>"</p>
-    </ul><br>
-  <% end %>
+  <div class="descrips">
+    <% @descriptions.each do |descrip| %>
+      <ul>
+        <p>"<%= descrip %>"</p>
+      </ul><br>
+    <% end %>
   </div>
 
-  <%= will_paginate @issues, renderer: BootstrapPagination::Rails %>
+
+
+<!-- store the data in database, figure out how to search the data to display, create an endpoint that will grab data (ajax?) -->
+<!--  primary key with id's of the issues, an embedded link -->
+<!--  parse the date and time integer into datetime object -->
+<!--  create a table for the issues model that will accept the category, date and issue-->
+<!--  if the website goes down you won't have access to data, need to store it-->
+<!--  when an event occurs in the dropdown menu, can send a post request through a form obj-->
+
+
+
+  <!-- <%#= will_paginate @issues, renderer: BootstrapPagination::Rails %>
   <nav>
     <ul class="pagination">
       <li>
@@ -80,4 +91,4 @@
         </a>
       </li>
     </ul>
-  </nav>
+  </nav> -->

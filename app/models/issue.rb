@@ -32,20 +32,86 @@ class Issue < ActiveRecord::Base
     return organizations
   end
 
-  def self.show_issues
-    issues = []
+  def self.show_descriptions
+    descrips = []
     request.each do |i|
-      issues << i[-3]
+      descrips << i[-3]
     end
-    return issues
+    return descrips
   end
 
-  def self.numbered_issues(issues)
-    issues.each do |issue|
+  def self.numbered(descriptions)
+    descriptions.each do |descrip|
       (1..1202).each do |number|
-        @numbered_issues = puts "#{number} #{issue}"
+        @numbered_descrip = puts "#{number} #{descrip}"
       end
     end
-    return @numbered_issues
+    return @numbered_decrip
+  end
+
+  def self.show_dates
+    dates = []
+    request.each do |i|
+       dates << i[-1].to_s
+      #  final_date = DateTime.strptime(date, "%s")
+    end
+    # new_dates = dates.delete_if {|date| date == (/"\"\""/)}
+    # return new_dates
+    return dates
+  end
+
+  # def self.convert_dates_to_datetime(dates)
+  #   datetime_obj = []
+  #
+  #   dates.each do |date|
+  #       converted_date = DateTime.strptime(date, "%s")
+  #       datetime_obj << converted_date
+  #   end
+  # end
+
+  #create single objects instead?
+  def self.category
+    show_categories.each do |category|
+      @category = category
+    end
+    return @category
+  end
+
+  def self.sub_category
+    show_sub_categories.each do |sub_category|
+      @sub_category = sub_category
+    end
+    return @sub_category
+  end
+
+  def self.organization
+    show_organizations.each do |organization|
+      @organization = organization
+    end
+    return @organization
+  end
+
+  def self.description
+    show_descriptions.each do |description|
+      @description = description
+    end
+    return @decription
+  end
+
+  def self.workshop_date
+    show_dates.each do |workshop_date|
+      @workshop_date = workshop_date
+    end
+    return @workshop_date
+  end
+
+  def self.create_issue
+    Issue.create(
+    :category => self.category,
+    :sub_category => self.sub_category,
+    :organization => self.organization,
+    :description => self.description,
+    :workshop_date => self.workshop_date
+    )
   end
 end
