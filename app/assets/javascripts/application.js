@@ -16,17 +16,39 @@
 
 $(document).ready( function() {
   $('.dropdown-toggle').dropdown();
-});
+  $(function() {
+    $(".filter").click(function(event){ //we only want the button that is clicked. not all buttons
+      alert("success!"); // this tells us if the click fn is working
+      event.preventDefault();
+      var form = $(this).parents("form")[0]; //this is similar to self. rep the obj that is currently being acted upon
+      //console.log(form);
+      //grab the attribute that is linked to the route of the button:
+      var url  = form.getAttribute("action");
+      console.log(url);
+      var request = $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        //get js object for org, date, and then grab the values(params) .val
+        data: {
+          date: $("#show_dates").val(),
+          organization: $("#organizations").val(),
+          category: $("#categories").val()
+        }
+      });
+      // once the ajax request has been made, do something:
 
-$(function() {
-  $(".choose").click(function(event){ //we only want the button that is clicked. not all buttons
-    event.preventDefault();
-    var form = $(this).parents("form"); //this is similar to self. rep the obj that is currently being acted upon
-    //grab the attribute that is linked to the route of the button
-    var url  = form.attr("action");
-    $.ajax({
-      type: "POST",
-      url: url
+      request.then(function(data){
+         console.log(data);
+
+        $.each(data, function(index, value){
+          // console.log(index + ". " + value.description);
+            var description = $("<li>").text(index + ". " + value.description);
+            // console.log(description);
+            var descriptionUL = $("#descriptions");
+            descriptionUL.append(description);
+        });
+      });
     });
   });
 });

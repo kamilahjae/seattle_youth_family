@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root "home#index"
 
-  get "issues",      to: "issues#index", as: :issues
-  get "show/issues", to: "issues#show",  as: :show_issues
+  get  "issues",      to: "issues#index", as: :issues
+  get  "show/issues", to: "issues#show",  as: :show_issues
+  post "show/issues", to: "issues#show"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

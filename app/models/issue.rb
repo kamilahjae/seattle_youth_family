@@ -7,7 +7,7 @@ class Issue < ActiveRecord::Base
     return r
     # an array of arrays
   end
-
+ 
   # return individual arrays from the array of arrays
   def self.create_issues
     request.each do |array|
